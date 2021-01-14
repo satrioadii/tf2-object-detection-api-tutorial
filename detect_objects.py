@@ -45,7 +45,7 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 			timestamp1 = time.time()
 			det_boxes = detector.DetectFromImage(img)
 			elapsed_time = round((time.time() - timestamp1) * 1000) #ms
-			print('Elapsed Time: ' + elapsed_time)
+			print('Elapsed Time:', str(elapsed_time))
 			img = detector.DisplayDetections(img, det_boxes)
 
 			# cv2.imshow('TF2 Detection', img)
