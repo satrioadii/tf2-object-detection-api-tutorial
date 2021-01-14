@@ -60,7 +60,7 @@ class DetectorTF2:
 			text = cls + ": " + score
 			cv2.rectangle(img, (x_min, y_min), (x_max, y_max), (0, 255, 0), 1)
 			cv2.rectangle(img, (x_min, y_min - 20), (x_min, y_min), (255, 255, 255), -1)
-			cv2.putText(img, text, (x_min + 5, y_min - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
+			# cv2.putText(img, text, (x_min + 5, y_min - 7), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 1)
 
 		if det_time != None:
 			fps = round(1000. / det_time, 1)
