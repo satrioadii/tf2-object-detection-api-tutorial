@@ -24,7 +24,7 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 			elapsed_time = round((time.time() - timestamp1) * 1000) #ms
 			print('Elapsed Time:', str(elapsed_time))
 			img = detector.DisplayDetections(img, det_boxes)
-			text_to_save = str(image_path) + ': ' + str(len(det_boxes)) + '[' + str(elapsed_time/1000) + 's] \r\n' 
+			text_to_save = str(image_path) + ':\r' + str(len(det_boxes)) + ' benur detected' + '\r' + '[' + str(elapsed_time/1000) + 's] \r\n'
 
 			if save_output:
 				img_out = os.path.join(output_dir, file.name)
