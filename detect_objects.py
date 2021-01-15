@@ -6,7 +6,8 @@ import argparse
 from detector import DetectorTF2
 
 def WriteFile(output_dir, file_name, content):
-	f = open(output_dir + '/' + file_name, 'a+')
+	file_output = os.path.join(output_dir, file_name)
+	f = open(file_output, 'a+')
 	f.write(content)
 	f.close()
 
@@ -28,7 +29,7 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 			if save_output:
 				img_out = os.path.join(output_dir, file.name)
 				cv2.imwrite(img_out, img)
-				WriteFile(img_out, 'ResultLog.txt', text_to_save)
+				WriteFile(output_dir, 'ResultLog.txt', text_to_save)
 
 
 if __name__ == "__main__":
