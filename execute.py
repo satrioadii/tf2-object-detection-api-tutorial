@@ -15,8 +15,28 @@ models = [
     'ssd-resnet50-fpn-5000',
 ]
 
-for model in models:
-    print('start executing model: ', model)
-    commmand_to_execute = 'sudo python3 detect_objects.py --threshold 0.3 --model_path models/' + model + ' --path_to_labelmap models/shrimp-seed_label_map.pbtxt --images_dir data/test16 --output_directory data/output/' + model + ' --save_output'
-    subprocess.call(commmand_to_execute, shell=True)
-    print(model + ' done!')
+threshold_setup = [0.3, 0.2]
+test_images_folders = ['test17', 'test33']
+
+for threshold in threshold_setup:
+    
+    # Generate string for threshold output folder
+    threshold_str = str(threshold)
+    threshold_str = threshold_str.replace('.', '_')
+
+    for folder in test_images_folders:
+
+        # Generate string for output folder
+        folder_subname = folder.replace('text', '')
+
+        for model in models:
+            print('start executing [folder: ' + folder + '] ' + ' [threshold: ' + threshold + ']: ' + model )
+            
+            # Generate output directory
+            output_directory = 'output_' + folder_subname + '_' + threshold_str
+
+            # Generate command to execute [on terminal]
+            commmand_to_execute = 'sudo python3 detect_objects.py --threshold ' + str(threshold) +' --model_path models/' + model + ' --path_to_labelmap models/shrimp-seed_label_map.pbtxt --images_dir data/' + folder +' --output_directory data/' + output_directory + '/' + model + ' --save_output'
+            subprocess.call(commmand_to_execute, shell=True)
+
+            print(model +  ' [folder: ' + folder + '] ' + ' [threshold: ' + threshold + ']: DONE!')
