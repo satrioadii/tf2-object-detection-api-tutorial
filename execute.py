@@ -39,4 +39,4 @@ for threshold in threshold_setup:
             commmand_to_execute = 'sudo python3 detect_objects.py --threshold ' + str(threshold) +' --model_path models/' + model + ' --path_to_labelmap models/shrimp-seed_label_map.pbtxt --images_dir data/' + folder +' --output_directory data/' + output_directory + '/' + model + ' --save_output'
             subprocess.call(commmand_to_execute, shell=True)
 
-            print(model +  ' [folder: ' + folder + '] ' + ' [threshold: ' + threshold + ']: DONE!')
+            print(model +  ' [folder: ' + folder + '] ' + ' [threshold: ' + str(threshold) + ']: DONE!')
