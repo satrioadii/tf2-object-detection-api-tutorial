@@ -30,7 +30,7 @@ for threshold in threshold_setup:
         folder_subname = folder.replace('text', '')
 
         for model in models:
-            print('start executing [folder: ' + folder + '] ' + ' [threshold: ' + threshold + ']: ' + model )
+            print('start executing [folder: ' + folder + '] ' + ' [threshold: ' + str(threshold) + ']: ' + model )
             
             # Generate output directory
             output_directory = 'output_' + folder_subname + '_' + threshold_str
