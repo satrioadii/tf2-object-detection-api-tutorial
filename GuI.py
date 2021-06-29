@@ -162,7 +162,7 @@ class StartPage(tk.Frame):
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
         rel_path = "./tensor.py"
         abs_file_path = os.path.join(script_dir, rel_path)
-        p1=subprocess.check_output('python3 ' +abs_file_path)
+        p1=subprocess.call('python3 ' +abs_file_path)
         value = int(p1.decode('utf-8'))
         self.ratarata = value
         #============================================#
