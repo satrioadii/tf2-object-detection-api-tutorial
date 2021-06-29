@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 import tkinter.messagebox
-import PIL.Image, PIL.ImageTk
+# import PIL.Image, PIL.ImageTk
 import tkinter.font as tkFont
 import numpy as np
 import cv2
