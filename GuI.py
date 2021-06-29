@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import *
 import tkinter.messagebox
-# import PIL.Image, PIL.ImageTk
 import tkinter.font as tkFont
 import numpy as np
 import cv2
@@ -75,6 +74,7 @@ class framecontroller(tk.Tk):
         self.mainWindow.geometry('%dx%d+%d+%d' % (maxWidth,maxHeight,0,0))
         self.mainWindow.resizable(0,0)
         self.mainWindow.title("SHRICO Satrio Version")
+        self.mainWindow.attributes("-fullscreen", True)
         
         # # creating a container
         container = tk.Frame(self.mainWindow) 
@@ -160,7 +160,7 @@ class StartPage(tk.Frame):
         #================ Process ===================#
         import os
         script_dir = os.path.dirname(__file__) #<-- absolute dir the script is in
-        rel_path = "tensor.py"
+        rel_path = "./tensor.py"
         abs_file_path = os.path.join(script_dir, rel_path)
         p1=subprocess.check_output('python ' +abs_file_path)
         value = int(p1.decode('utf-8'))
