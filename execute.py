@@ -5,10 +5,10 @@ models = [
     'faster-rcnn-resnet50-6000',
     'faster-rcnn-resnet50-5000',
     'faster-rcnn-resnet50-4000',
-    'ssd-mobilenet-v2-8000',
-    'ssd-mobilenet-v2-6000',
-    'ssd-mobilenet-v2-5000',
-    'ssd-mobilenet-v2-4000',
+    # 'ssd-mobilenet-v2-8000',
+    # 'ssd-mobilenet-v2-6000',
+    # 'ssd-mobilenet-v2-5000',
+    # 'ssd-mobilenet-v2-4000',
 ]
 
 threshold_setup = [0.3, 0.2]
