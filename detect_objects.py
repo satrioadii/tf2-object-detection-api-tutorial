@@ -20,12 +20,10 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 	for file in os.scandir(images_dir):
 		if file.is_file() and file.name.endswith(('.jpg', '.jpeg', '.png')) :
 			image_path = os.path.join(images_dir, file.name)
-			print(image_path)
 			img = cv2.imread(image_path)
 			timestamp1 = time.time()
 			det_boxes = detector.DetectFromImage(img)
 			elapsed_time = round((time.time() - timestamp1) * 1000) #ms
-			print('Elapsed Time:', str(elapsed_time))
 			img = detector.DisplayDetections(img, det_boxes)
 
 			total_detected = total_detected + len(det_boxes)
@@ -38,6 +36,7 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 
 	elapsed_time2 = round((time.time() - timestamp2) * 1000) #ms
 	final_text_to_save = str(total_detected) + 'benur detected\t' + '[' + str(elapsed_time2/1000) + ' s]'
+	print(total_detected)
 	if save_output:
 		WriteFile(output_dir, 'Final.txt', final_text_to_save)
 
@@ -71,5 +70,3 @@ if __name__ == "__main__":
 	detector = DetectorTF2(args.model_path, args.path_to_labelmap, class_id=id_list, threshold=args.threshold)
 
 	DetectImagesFromFolder(detector, args.images_dir, save_output=args.save_output, output_dir=args.output_directory)
-
-	print("Done ...")
