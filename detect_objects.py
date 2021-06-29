@@ -14,6 +14,9 @@ def WriteFile(output_dir, file_name, content):
 
 def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='output/'):
 
+	total_detected = 0
+	timestamp2 = time.time()
+
 	for file in os.scandir(images_dir):
 		if file.is_file() and file.name.endswith(('.jpg', '.jpeg', '.png')) :
 			image_path = os.path.join(images_dir, file.name)
@@ -24,12 +27,20 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 			elapsed_time = round((time.time() - timestamp1) * 1000) #ms
 			print('Elapsed Time:', str(elapsed_time))
 			img = detector.DisplayDetections(img, det_boxes)
+
+			total_detected = total_detected + len(det_boxes)
 			text_to_save = str(file.name) + ':\t' + str(len(det_boxes)) + ' benur detected' + '\t' + '[' + str(elapsed_time/1000) + ' s] \t\n'
 
 			if save_output:
 				img_out = os.path.join(output_dir, file.name)
 				cv2.imwrite(img_out, img)
 				WriteFile(output_dir, 'ResultLog.txt', text_to_save)
+
+	elapsed_time2 = round((time.time() - timestamp2) * 1000) #ms
+	final_text_to_save = str(total_detected) + 'benur detected\t' + '[' + str(elapsed_time2/1000) + ' s]'
+	if save_output:
+		WriteFile(output_dir, 'Final.txt', final_text_to_save)
+
 
 
 if __name__ == "__main__":

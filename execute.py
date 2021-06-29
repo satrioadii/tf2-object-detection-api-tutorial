@@ -1,18 +1,14 @@
 import subprocess
 
 models = [
-    'faster-rcnn-resnet50-10000',
+    'faster-rcnn-resnet50-8000',
     'faster-rcnn-resnet50-6000',
     'faster-rcnn-resnet50-5000',
     'faster-rcnn-resnet50-4000',
-    'faster-rcnn-resnet50-3000',
-    'ssd-mobilenet-v2-10000',
+    'ssd-mobilenet-v2-8000',
     'ssd-mobilenet-v2-6000',
     'ssd-mobilenet-v2-5000',
     'ssd-mobilenet-v2-4000',
-    'ssd-mobilenet-v2-3000',
-    'ssd-resnet50-fpn-10000',
-    'ssd-resnet50-fpn-5000',
 ]
 
 threshold_setup = [0.3, 0.2]
