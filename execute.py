@@ -1,18 +1,16 @@
 import subprocess
 
 models = [
-    # 'faster-rcnn-resnet50-8000',
     'faster-rcnn-resnet50-6000',
     'faster-rcnn-resnet50-5000',
     'faster-rcnn-resnet50-4000',
-    # 'ssd-mobilenet-v2-8000',
-    # 'ssd-mobilenet-v2-6000',
-    # 'ssd-mobilenet-v2-5000',
+    'ssd-mobilenet-v2-6000',
+    'ssd-mobilenet-v2-5000',
     # 'ssd-mobilenet-v2-4000',
 ]
 
 threshold_setup = [0.3]
-test_images_folders = ['PL_5/1', 'PL_5/2', 'PL_8/1', 'PL_8/2']
+test_images_folders = ['PL_5/1', 'PL_5/2', 'PL_5/3', 'PL_8/1', 'PL_8/2', 'PL_8/3']
 
 for threshold in threshold_setup:
     
