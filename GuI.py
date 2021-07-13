@@ -131,7 +131,7 @@ def execute_tf(model_path, threshold, output_directory, labelmap_path, images_di
         detector, images_dir, save_output=True, output_dir=output_directory)
 
 
-models = ['faster-rcnn-resnet50-6000']
+models = ['ssd-mobilenet-v2-5000']
 threshold_setup = [0.3]
 test_images_folders = ['1', '2']
 
