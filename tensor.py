@@ -95,15 +95,20 @@ def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='
 
 	elapsed_time2 = round((time.time() - timestamp2) * 1000) #ms
 	final_text_to_save = str(total_detected) + 'benur detected\t' + '[' + str(elapsed_time2/1000) + ' s]'
-	return total_detected
 	if save_output:
 		WriteFile(output_dir, 'Final.txt', final_text_to_save)
+	return total_detected
 
 # For detection
 def execute_tf(model_path, threshold, output_directory, labelmap_path, images_dir, id_list_data = None):
     id_list = id_list_data
     if id_list_data is not None:
         id_list = [int(item) for item in id_list_data.split(',')]
+
+    save_output = True
+    if save_output:
+        if not os.path.exists(output_directory):
+            os.makedirs(output_directory)
 
     # instance of the class DetectorTF2
     detector = DetectorTF2(model_path, labelmap_path,
