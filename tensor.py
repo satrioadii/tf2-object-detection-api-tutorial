@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from PIL import Image
 import time
+import subprocess
 
 
 def make_image_square(filename):
@@ -28,8 +29,6 @@ def crop_image():
         img = cv2.imread(image_name)
 
         h, w, c = img.shape
-
-        print(h, w, image_name)
 
         w_constant = w/3
         h_constant = h/2
@@ -63,17 +62,51 @@ def crop_image():
                 make_image_square(file_name)
 
 
+models = ['faster-rcnn-resnet50-6000']
+threshold_setup = [0.3]
+test_images_folders = ['1', '2']
+
+
+def detect_images():
+    detected_total = 0
+    total_detection_process = 0
+    for threshold in threshold_setup:
+        # Generate string for threshold output folder
+        threshold_str = str(threshold)
+        threshold_str = threshold_str.replace('.', '_')
+
+        for folder in test_images_folders:
+
+            # Generate string for output folder
+            folder_subname = folder.replace('/', '_')
+
+            for model in models:
+                # Generate output directory
+                output_directory = 'output_' + folder_subname + '_' + threshold_str
+
+                # Generate command to execute [on terminal]
+                commmand_to_execute = 'python3 detect_objects.py --threshold ' + \
+                    str(threshold) + ' --model_path models/' + model + ' --path_to_labelmap models/shrimp-seed_label_map.pbtxt --images_dir data/' + \
+                    folder + ' --output_directory data/' + \
+                    output_directory + '/' + model + ' --save_output'
+
+                # Execute command, and keep the result
+                subprocess_result = subprocess.check_output(
+                    commmand_to_execute, shell=True)
+
+                detected_total += int(subprocess_result.decode('utf-8'))
+                total_detection_process += 1
+
+    return detected_total / total_detection_process
+
 def main():
 
-    ratarata = 0
-    #=========== Put your Program in here ========#
+    #=========== Detection Program here ========#
     crop_image()
-    time.sleep(5)
-    #====== Put the return value to ratarata =====#
-    ratarata = 200
-    #=============================================#
+    #=========== Should return the result ======#
+    detected_result = detect_images()
 
-    print(ratarata)
+    print(detected_result)
 
 
 if __name__ == "__main__":
