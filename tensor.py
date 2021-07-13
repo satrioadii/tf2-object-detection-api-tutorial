@@ -1,10 +1,13 @@
 import cv2
+import os
 import numpy as np
 from PIL import Image
 import time
 import subprocess
 
+from detector import DetectorTF2
 
+# For preprocessing image
 def make_image_square(filename):
     img = cv2.imread(filename)
     # Size of the image
@@ -21,7 +24,7 @@ def make_image_square(filename):
     f[ay:img.shape[0]+ay, ax:ax+img.shape[1]] = img
     cv2.imwrite(filename, f)
 
-
+# For preprocessing image
 def crop_image():
     for image_index in range(2):
         folder_name = 'data/'
@@ -61,12 +64,60 @@ def crop_image():
 
                 make_image_square(file_name)
 
+# For detection
+def WriteFile(output_dir, file_name, content):
+    file_output = os.path.join(output_dir, file_name)
+    f = open(file_output, 'a+')
+    f.write(content)
+    f.close()
+
+# For detection
+def DetectImagesFromFolder(detector, images_dir, save_output=False, output_dir='output/'):
+	total_detected = 0
+	timestamp2 = time.time()
+
+	for file in os.scandir(images_dir):
+		if file.is_file() and file.name.endswith(('.jpg', '.jpeg', '.png')) :
+			image_path = os.path.join(images_dir, file.name)
+			img = cv2.imread(image_path)
+			timestamp1 = time.time()
+			det_boxes = detector.DetectFromImage(img)
+			elapsed_time = round((time.time() - timestamp1) * 1000) #ms
+			img = detector.DisplayDetections(img, det_boxes)
+
+			total_detected = total_detected + len(det_boxes)
+			text_to_save = str(file.name) + ':\t' + str(len(det_boxes)) + ' benur detected' + '\t' + '[' + str(elapsed_time/1000) + ' s] \t\n'
+
+			if save_output:
+				img_out = os.path.join(output_dir, file.name)
+				cv2.imwrite(img_out, img)
+				WriteFile(output_dir, 'ResultLog.txt', text_to_save)
+
+	elapsed_time2 = round((time.time() - timestamp2) * 1000) #ms
+	final_text_to_save = str(total_detected) + 'benur detected\t' + '[' + str(elapsed_time2/1000) + ' s]'
+	return total_detected
+	if save_output:
+		WriteFile(output_dir, 'Final.txt', final_text_to_save)
+
+# For detection
+def execute_tf(model_path, threshold, output_directory, labelmap_path, images_dir, id_list_data = None):
+    id_list = id_list_data
+    if id_list_data is not None:
+        id_list = [int(item) for item in id_list_data.split(',')]
+
+    # instance of the class DetectorTF2
+    detector = DetectorTF2(model_path, labelmap_path,
+                            class_id=id_list, threshold=threshold)
+
+    DetectImagesFromFolder(
+        detector, images_dir, save_output=True, output_dir=output_directory)
+
 
 models = ['faster-rcnn-resnet50-6000']
 threshold_setup = [0.3]
 test_images_folders = ['1', '2']
 
-
+# For detection
 def detect_images():
     detected_total = 0
     total_detection_process = 0
@@ -84,20 +135,18 @@ def detect_images():
                 # Generate output directory
                 output_directory = 'output_' + folder_subname + '_' + threshold_str
 
-                # Generate command to execute [on terminal]
-                commmand_to_execute = 'python3 detect_objects.py --threshold ' + \
-                    str(threshold) + ' --model_path models/' + model + ' --path_to_labelmap models/shrimp-seed_label_map.pbtxt --images_dir data/' + \
-                    folder + ' --output_directory data/' + \
-                    output_directory + '/' + model + ' --save_output'
+                detection_model_path = 'models/' + model
+                detection_labelmap_path = 'models/shrimp-seed_label_map.pbtxt'
+                detection_images_dir = 'data/' + folder
+                detection_output_dir = 'data/' + output_directory = '/' + model
 
-                # Execute command, and keep the result
-                subprocess_result = subprocess.check_output(
-                    commmand_to_execute, shell=True)
+                detection_result = execute_tf(detection_model_path, threshold, detection_output_dir, detection_labelmap_path, detection_images_dir)
 
-                detected_total += int(subprocess_result.decode('utf-8'))
+                detected_total += int(detection_result)
                 total_detection_process += 1
 
     return detected_total / total_detection_process
+
 
 def main():
 
