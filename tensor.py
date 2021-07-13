@@ -138,7 +138,7 @@ def detect_images():
                 detection_model_path = 'models/' + model
                 detection_labelmap_path = 'models/shrimp-seed_label_map.pbtxt'
                 detection_images_dir = 'data/' + folder
-                detection_output_dir = 'data/' + output_directory = '/' + model
+                detection_output_dir = 'data/' + output_directory + '/' + model
 
                 detection_result = execute_tf(detection_model_path, threshold, detection_output_dir, detection_labelmap_path, detection_images_dir)
 
