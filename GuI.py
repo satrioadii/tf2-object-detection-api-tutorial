@@ -127,8 +127,10 @@ def execute_tf(model_path, threshold, output_directory, labelmap_path, images_di
     detector = DetectorTF2(model_path, labelmap_path,
                             class_id=id_list, threshold=threshold)
 
-    DetectImagesFromFolder(
+    detection_result = DetectImagesFromFolder(
         detector, images_dir, save_output=True, output_dir=output_directory)
+
+    return detection_result
 
 
 models = ['ssd-mobilenet-v2-5000']
