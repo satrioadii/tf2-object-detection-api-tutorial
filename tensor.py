@@ -3,7 +3,6 @@ import os
 import numpy as np
 from PIL import Image
 import time
-import subprocess
 
 from detector import DetectorTF2
 
@@ -114,11 +113,13 @@ def execute_tf(model_path, threshold, output_directory, labelmap_path, images_di
     detector = DetectorTF2(model_path, labelmap_path,
                             class_id=id_list, threshold=threshold)
 
-    DetectImagesFromFolder(
+    result = DetectImagesFromFolder(
         detector, images_dir, save_output=True, output_dir=output_directory)
 
+    return result
 
-models = ['faster-rcnn-resnet50-6000']
+
+models = ['ssd-mobilenet-v2-5000']
 threshold_setup = [0.3]
 test_images_folders = ['1', '2']
 
