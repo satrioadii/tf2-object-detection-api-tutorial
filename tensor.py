@@ -151,7 +151,7 @@ def detect_images():
                 detected_total += int(detection_result)
                 total_detection_process += 1
 
-    return detected_total / total_detection_process
+    return float(detected_total) / float(total_detection_process)
 
 
 def main():
@@ -161,7 +161,7 @@ def main():
     #=========== Should return the result ======#
     detected_result = detect_images()
 
-    print(detected_result)
+    print(detected_result, end='')
 
 
 if __name__ == "__main__":

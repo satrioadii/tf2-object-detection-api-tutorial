@@ -159,7 +159,7 @@ class StartPage(tk.Frame):
         rel_path = "tensor.py"
         abs_file_path = os.path.join(script_dir, rel_path)
         p1=subprocess.check_output('python3 tensor.py', shell=True)
-        value = int(p1.decode('utf-8'))
+        value = float(p1.decode('utf-8'))
         self.ratarata = value
         #============================================#
         self.stopEvent.set()
