@@ -157,10 +157,9 @@ def detect_images():
 def main():
 
     #=========== Detection Program here ========#
-    # crop_image()
+    crop_image()
     #=========== Should return the result ======#
-    # detected_result = detect_images()
-    detected_result = 170.0
+    detected_result = detect_images()
 
     print(detected_result, end='')
 
