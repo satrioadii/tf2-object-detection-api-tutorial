@@ -177,8 +177,7 @@ class StartPage(tk.Frame):
         self.button3.stateButton("active")
        
     def close(self):
-        import sys
-        sys.exit("Close")	
+        subprocess.run('sudo shutdown -h now', shell=True)
 
 
 
